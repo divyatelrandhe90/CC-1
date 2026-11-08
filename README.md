@@ -1,6 +1,6 @@
 # Student Management System
 
-Frontend: https://lambent-treacle-f24ff5.netlify.app/
+Frontend: https://cc-1-divya.netlify.app/
 
 Backend API: https://cc-1-b4mz.onrender.com
 
@@ -108,7 +108,7 @@ In Claude, open **Settings → Connectors → Add custom connector** and enter t
 2. Set the Netlify environment variable `VITE_API_URL` to `https://cc-1-b4mz.onrender.com/api`.
 3. Use Build Command `npm run build` and Publish Directory `dist`.
 4. Redeploy the Netlify site after setting or changing `VITE_API_URL`; Vite reads this variable at build time.
-5. Set Render's `FRONTEND_URL` to exactly `https://lambent-treacle-f24ff5.netlify.app`, with no trailing slash, and redeploy the backend.
+5. Set Render's `FRONTEND_URL` to exactly `https://cc-1-divya.netlify.app`, with no trailing slash, and redeploy the backend.
 
 ## Testing
 

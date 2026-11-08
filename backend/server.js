@@ -11,7 +11,7 @@ connectDB();
 const app = express();
 const frontendOrigin = process.env.FRONTEND_URL?.replace(/\/$/, '');
 const corsOptions = {
-  origin: [frontendOrigin, 'http://localhost:5173'].filter(Boolean),
+  origin: [frontendOrigin, 'https://cc-1-divya.netlify.app', 'http://localhost:5173'].filter(Boolean),
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
 };
