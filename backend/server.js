@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -39,17 +39,27 @@ app.use((error, req, res, next) => {
 });
 
 const port = process.env.PORT || 5000;
-const startServer = async () => {
-  if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI is required');
-  await connectDB();
-  return app.listen(port, () => console.log(`Server running on port ${port}`));
+const startServer = () => {
+  const server = app.listen(port, () => console.log(`Server running on port ${port}`));
+  server.on('error', (error) => {
+    console.error(`HTTP server failed to listen (${error.code || error.name || 'Error'}). Check the Render PORT setting.`);
+    process.exitCode = 1;
+  });
+
+  connectDB().catch((error) => {
+    console.error(`MongoDB initialization failed (${error.name || 'Error'}). The API will remain available with database health reported as unavailable.`);
+  });
+
+  return server;
 };
 
 if (require.main === module) {
-  startServer().catch((error) => {
-    console.error(`Server startup failed (${error.name || 'Error'}). Check MongoDB connectivity and configuration.`);
+  try {
+    startServer();
+  } catch (error) {
+    console.error(`HTTP server startup failed (${error.name || 'Error'}). Check the Render PORT setting.`);
     process.exitCode = 1;
-  });
+  }
 }
 
 module.exports = { app, startServer };

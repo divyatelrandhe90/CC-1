@@ -1,5 +1,5 @@
 # Backend
 
-Express REST API for the application tier. Copy `.env.example` to `.env`, set `MONGODB_URI` and `FRONTEND_URL`, then run `npm install` and `npm run dev`. The server waits for MongoDB to connect before accepting requests.
+Express REST API for the application tier. Copy `.env.example` to `.env`, set `MONGODB_URI` and `FRONTEND_URL`, then run `npm install` and `npm run dev`. Dotenv loads `backend/.env` relative to the server file. The HTTP server starts while MongoDB connects; student endpoints return 503 until the database is ready, and failed connections retry with a capped exponential backoff. Connection diagnostics redact the URI and credentials.
 
-For Render: set build command `npm install`, start command `npm start`, and configure `MONGODB_URI` plus the deployed Netlify URL as `FRONTEND_URL`.
+For Render: set Root Directory to `backend`, Build Command to `npm install`, and Start Command to `npm start`. In the service environment, set `MONGODB_URI` to the Atlas application's generated connection string and `FRONTEND_URL` to the deployed Netlify origin. Do not surround the URI with quotes. If the Atlas database username or password contains reserved characters, percent-encode them in the URI. In Atlas Network Access, allow Render's outbound IP addresses (or use an appropriately restricted network rule for the deployment). Also confirm the database user has access to the selected database. A connection failure now leaves the HTTP service running and retries; `/api/health` remains 503 until Atlas is reachable.
