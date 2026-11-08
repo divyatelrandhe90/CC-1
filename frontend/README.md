@@ -2,4 +2,4 @@
 
 React + Vite presentation layer. Run `npm install` then `npm run dev`.
 
-Update `src/api.js` to `https://YOUR-RENDER-SERVICE.onrender.com/api` before deploying to Netlify. Netlify build command: `npm run build`; publish directory: `dist`.
+The deployed API is `https://cc-1-b4mz.onrender.com/api`. Set `VITE_API_URL` to this value in Netlify if you want to override the frontend default. Netlify build command: `npm run build`; publish directory: `dist`.

@@ -1,6 +1,8 @@
 # Student Management System
 
-Deployed link :- https://smshubbit.netlify.app/
+Frontend: https://lambent-treacle-f24ff5.netlify.app/
+
+Backend API: https://cc-1-b4mz.onrender.com
 
 A production-ready MERN student directory built for a three-tier cloud architecture:
 
@@ -103,10 +105,10 @@ In Claude, open **Settings → Connectors → Add custom connector** and enter t
 ## Deploy to Netlify
 
 1. Create a Netlify site with `frontend` as the base directory.
-2. Set the Netlify environment variable `VITE_API_URL` to `https://YOUR-RENDER-SERVICE.onrender.com/api` (replace this with your Render service URL).
+2. Set the Netlify environment variable `VITE_API_URL` to `https://cc-1-b4mz.onrender.com/api`.
 3. Use Build Command `npm run build` and Publish Directory `dist`.
 4. Redeploy the Netlify site after setting or changing `VITE_API_URL`; Vite reads this variable at build time.
-5. Set Render's `FRONTEND_URL` to exactly `https://smshubbit.netlify.app` (or your final Netlify URL), with no trailing slash, and redeploy the backend.
+5. Set Render's `FRONTEND_URL` to exactly `https://lambent-treacle-f24ff5.netlify.app`, with no trailing slash, and redeploy the backend.
 
 ## Testing
 
