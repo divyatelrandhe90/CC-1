@@ -1,3 +1,21 @@
+
+Remember My Project of BIT SMS, where i can ask claude to do anything it can uodate code base and deply as well also it spwans conatiner on render... 
+
+I wanty to do same on this repo as well. Telll me steos in detail. 
+
+https://github.com/divyatelrandhe90/CC-1
+
+
+https://cc-1-divya.netlify.app/ 
+
+
+
+I want to do exactly same
+
+
+
+
+
 # Student Management System
 
 Frontend: https://cc-1-divya.netlify.app/

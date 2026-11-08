@@ -5,7 +5,11 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const studentRoutes = require('./routes/studentRoutes');
 const mcpHandler = require('./mcp');
-
+app.post('/mcp/:secret', (req, res) =>
+  req.params.secret === process.env.MCP_SECRET
+    ? mcpHandler(req, res)
+    : res.status(404).json({ success: false, message: 'Route not found' })
+);
 const app = express();
 const frontendOrigin = process.env.FRONTEND_URL?.replace(/\/$/, '');
 const corsOptions = {
