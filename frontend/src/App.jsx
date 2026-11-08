@@ -12,8 +12,20 @@ export default function App() {
   const [notice, setNotice] = useState({ text: '', error: false });
   const [loading, setLoading] = useState(true);
   const notify = (text, error = false) => setNotice({ text, error });
-  const errorMessage = (error, fallback) => error.response?.data?.message || error.response?.data?.error || error.message || fallback;
-  const loadStudents = async () => { try { setLoading(true); const { data } = await api.get('/students'); setStudents(Array.isArray(data) ? data : data.students || data.data || []); } catch (e) { notify(errorMessage(e, 'Could not reach the backend.'), true); } finally { setLoading(false); } };
+  const errorMessage = (error, fallback) => {
+    if (error.response?.data?.message || error.response?.data?.error) return error.response.data.message || error.response.data.error;
+    if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') return 'Cannot reach the API. Check the API URL, CORS settings, and Render service status.';
+    return error.message || fallback;
+  };
+  const loadStudents = async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.get('/students');
+      const records = Array.isArray(data) ? data : data.students || data.data || [];
+      setStudents(Array.isArray(records) ? records : []);
+    } catch (e) { notify(errorMessage(e, 'Could not reach the backend.'), true); }
+    finally { setLoading(false); }
+  };
   useEffect(() => { loadStudents(); }, []);
   const filteredStudents = useMemo(() => students.filter((s) => `${s.studentId} ${s.name}`.toLowerCase().includes(search.toLowerCase())), [students, search]);
   const submit = async (event) => {

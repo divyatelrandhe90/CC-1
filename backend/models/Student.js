@@ -14,6 +14,6 @@ const studentSchema = new mongoose.Schema({
   department: { type: String, required: [true, 'Department is required'], trim: true },
   semester: { type: Number, required: [true, 'Semester is required'], min: [1, 'Semester must be at least 1'], max: [12, 'Semester cannot exceed 12'] },
   contact: { type: String, required: [true, 'Contact is required'], trim: true }
-}, { timestamps: true });
+}, { timestamps: true, bufferCommands: false });
 
 module.exports = mongoose.model('Student', studentSchema);

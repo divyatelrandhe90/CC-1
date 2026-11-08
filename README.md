@@ -38,7 +38,7 @@ student-management-system/
 
 ## Local installation
 
-Create an Atlas database and database user. In Atlas Network Access, allow your development IP (and later Render). Obtain the connection string and put it in `backend/.env`, created from `.env.example`:
+Create an Atlas database and database user. In Atlas Network Access, allow your development IP (and later Render). Obtain the connection string and put it in `backend/.env`, created from `backend/.env.example`:
 
 ```env
 PORT=5000
@@ -104,11 +104,11 @@ In Claude, open **Settings → Connectors → Add custom connector** and enter t
 
 ## Deploy to Netlify
 
-1. Create a Netlify site with `frontend` as the base directory.
+1. Connect this repository to Netlify. The root `netlify.toml` configures `frontend` as the base directory, `npm run build` as the build command, and `dist` as the publish directory.
 2. Set the Netlify environment variable `VITE_API_URL` to `https://cc-1-b4mz.onrender.com/api`.
 3. Use Build Command `npm run build` and Publish Directory `dist`.
 4. Redeploy the Netlify site after setting or changing `VITE_API_URL`; Vite reads this variable at build time.
-5. Set Render's `FRONTEND_URL` to exactly `https://cc-1-divya.netlify.app`, with no trailing slash, and redeploy the backend.
+5. Set Render's `FRONTEND_URL` to exactly `https://cc-1-divya.netlify.app`, with no trailing slash, and redeploy the backend. The backend also allows local Vite development at `http://localhost:5173`.
 
 ## Testing
 
