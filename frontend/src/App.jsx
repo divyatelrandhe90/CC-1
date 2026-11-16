@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import api from './api';
 
 const emptyStudent = { studentId: '', name: '', email: '', department: '', semester: '', contact: '' };
@@ -8,6 +8,14 @@ const palette = ['#8b5cf6', '#06b6d4', '#f59e0b', '#ec4899', '#10b981', '#3b82f6
 const initials = (name = '') => name.split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('') || '?';
 const colorFor = (text = '') => palette[[...text].reduce((a, c) => a + c.charCodeAt(0), 0) % palette.length];
 
+const getInitialTheme = () => {
+  try {
+    const saved = localStorage.getItem('sms-theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+  } catch (e) { /* storage unavailable */ }
+  return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+};
+
 export default function App() {
   const [students, setStudents] = useState([]);
   const [form, setForm] = useState(emptyStudent);
@@ -16,8 +24,14 @@ export default function App() {
   const [search, setSearch] = useState('');
   const [dept, setDept] = useState('All');
   const [view, setView] = useState('cards');
+  const [theme, setTheme] = useState(getInitialTheme);
   const [notice, setNotice] = useState({ text: '', error: false });
   const [loading, setLoading] = useState(true);
+
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try { localStorage.setItem('sms-theme', theme); } catch (e) { /* ignore */ }
+  }, [theme]);
 
   const notify = (text, error = false) => setNotice({ text, error });
   const errorMessage = (error, fallback) => {
@@ -110,7 +124,13 @@ export default function App() {
             <small>Student Management System</small>
           </div>
         </div>
-        <button className="btn-primary" onClick={openAdd}>＋ Add Student</button>
+        <div className="top-right">
+          <div className="theme-switch" role="group" aria-label="Color theme">
+            <button className={theme === 'light' ? 'on' : ''} onClick={() => setTheme('light')} aria-label="Light mode" title="Light mode">☀️</button>
+            <button className={theme === 'dark' ? 'on' : ''} onClick={() => setTheme('dark')} aria-label="Dark mode" title="Dark mode">🌙</button>
+          </div>
+          <button className="btn-primary" onClick={openAdd}>＋ Add Student</button>
+        </div>
       </header>
 
       <main>
@@ -182,7 +202,7 @@ export default function App() {
             <div className="table-wrap">
               <table>
                 <thead>
-                  <tr>{['Student', 'ID', 'Email', 'Department', 'Sem', 'Contact', ''].map((h) => <th key={h}>{h}</th>)}</tr>
+                  <tr>{['Student', 'ID', 'Email', 'Department', 'Sem', 'Contact', ''].map((h, i) => <th key={i}>{h}</th>)}</tr>
                 </thead>
                 <tbody>
                   {filteredStudents.map((s) => (
